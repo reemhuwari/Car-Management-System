@@ -60,7 +60,7 @@ export class CarsTypesComponent implements OnInit {
 
   saveCar() {
     if (this.editingCar) {
-      this.carService.updateCar(this.editingCar.id, this.editingCar).subscribe(() => {
+      this.carService.updateCar( this.editingCar).subscribe(() => {
         const index = this.cars.findIndex(c => c.id === this.editingCar.id);
         if (index !== -1) this.cars[index] = { ...this.editingCar };
         this.editingCar = null;
@@ -69,18 +69,18 @@ export class CarsTypesComponent implements OnInit {
     }
   }
 
-  deleteCar(carId: number) {
+  deleteCar(carId: string) {
     this.carService.deleteCar(carId).subscribe(() => {
       this.cars = this.cars.filter(car => car.id !== carId);
       this.searchCars();
     });
   }
 
-  goToDetails(carId: number) {
+  goToDetails(carId: string) {
     this.router.navigate(['/cars-details']);
   }
 
-  trackByCarId(index: number, car: any): number {
+  trackByCarId(index: number, car: any): string {
     return car.id;
   }
 }

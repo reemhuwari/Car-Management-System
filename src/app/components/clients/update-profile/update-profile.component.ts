@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from '../../../services/clients.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LookupService } from '../../../services/lookup.service';
+import { Client } from '../../../models/client.model';
+import { Lookup } from '../../../models/lookup.model';
+import { LookupEnum } from '../../../enums/lookup.enum';
 
 @Component({
   selector: 'app-update-profile',
@@ -27,64 +32,84 @@ export class UpdateProfileComponent implements OnInit {
     city: false
   };
 
-  constructor(private clientsService: ClientsService, private router: Router) {}
+ clientForm!: FormGroup;
+  client!: Client;
+countries: Lookup[] = [];
+cities: Lookup[] = [];
+
+
+
+  constructor(
+    private clientService:ClientsService,
+    private router: Router,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private lookupService: LookupService
+  ) {}
 
   ngOnInit(): void {
-    const email = localStorage.getItem('userEmail');
-    if (email) {
-      this.clientsService.getClientByEmail(email).subscribe(
-        (data) => {
-          this.user = data;
-        },
-        (error) => {
-          console.error('حدث خطأ أثناء جلب بيانات العميل:', error);
-        }
-      );
+  
+
+  
+    this.clientForm = this.fb.group({
+      fullName: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      address: this.fb.group({
+              country: ['', Validators.required],
+              city:['', Validators.required],
+      })
+      
+    });
+   this.lookupService.getAll(LookupEnum.country).subscribe(data => this.countries = data);
+
+  const idParam = this.route.snapshot.paramMap.get('id')!;
+if (idParam !== null && idParam !== undefined) {
+  this.clientService.getClient(idParam).subscribe(
+  data => {
+    this.client = data;
+     if (data.address?.country) {
+        this.lookupService.getAll(LookupEnum.city, data.address.country).subscribe(cities => {
+          this.cities = cities;
+        });
+      }
+    this.clientForm.patchValue({
+      fullName: data.fullName,
+      phone: data.phone,
+      email: data.email,
+      address: {
+      country: data.address?.country || '',
+      city: data.address?.city || '',
+      
+    }
+      
+    });
+   });} else {
+  console.error('المعرف غير موجود في الرابط');
+  this.router.navigate(['/error']); 
+  
+}}
+  onSubmit() {
+    if (this.client?.id) {
+      const updatedCustomer = { ...this.client, ...this.clientForm.value };
+      this.clientService.updateClient(this.client.id, updatedCustomer).subscribe(() => {
+        alert('تم تحديث المعلومات بنجاح');
+        this.router.navigate(['/client-profile']);
+      });
     }
   }
+  onCountryChange(event: Event): void {
+  const selectElement = event.target as HTMLSelectElement;
+  const countryId = selectElement.value;
 
-  updateProfile(): void {
-    let isValid = true;
-
-    // التحقق من الحقول الأساسية
-    if (!this.user.fullName || this.user.fullName.trim() === '') {
-      this.fieldErrors.fullName = true;
-      isValid = false;
-    } else {
-      this.fieldErrors.fullName = false;
-    }
-
-    if (!this.user.phone || this.user.phone.trim() === '') {
-      this.fieldErrors.phone = true;
-      isValid = false;
-    } else {
-      this.fieldErrors.phone = false;
-    }
-
-    if (!this.user.address.country || this.user.address.country.trim() === '') {
-      this.fieldErrors.country = true;
-      isValid = false;
-    } else {
-      this.fieldErrors.country = false;
-    }
-
-    if (!this.user.address.city || this.user.address.city.trim() === '') {
-      this.fieldErrors.city = true;
-      isValid = false;
-    } else {
-      this.fieldErrors.city = false;
-    }
-
-    if (isValid) {
-      this.clientsService.updateClient(this.user.id, this.user).subscribe(
-        () => {
-          alert('✅ تم تحديث البيانات بنجاح');
-          this.router.navigate(['/client-profile']);
-        },
-        (error) => {
-          console.error('❌ خطأ أثناء تحديث البيانات:', error);
-        }
-      );
-    }
+  if (countryId) {
+    this.lookupService.getAll(LookupEnum.city, countryId).subscribe(cities => {
+      this.cities = cities;
+      this.clientForm.get('address.city')?.setValue(''); // إعادة تعيين المدينة
+    });
   }
 }
+
+
+  }
+

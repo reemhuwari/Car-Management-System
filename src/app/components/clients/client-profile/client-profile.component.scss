@@ -1,206 +1,228 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
-.profile-container {
+:root {
+  --primary: #007bff;
+  --accent: #00c4cc;
+  --text-dark: #2c3e50;
+  --text-light: #ffffff;
+  --bg-light: #f5f7fa;
+  --bg-dark: #2c3e50;
+  --glass-bg: rgba(255, 255, 255, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+body {
   font-family: 'Cairo', sans-serif;
-  padding: 20px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  direction: rtl;
+  background: var(--bg-light);
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+
+.profile-container {
+  padding: 30px;
   min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-light), #c3cfe2);
   transition: background 0.3s ease;
-  direction: rtl; 
+
   &.dark-mode {
-    background: linear-gradient(135deg, #2c3e50 0%, #4b6584 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--bg-dark), #4b6584);
+    color: var(--text-light);
 
+    .card,
     .navbar {
-      background: rgba(255, 255, 255, 0.1);
-      .navbar-brand h1 {
-        color: #ffffff;
-      }
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-light);
     }
 
-    .profile-section,
-    .profile-header {
-      background: rgba(255, 255, 255, 0.1);
-      color: #ffffff;
-    }
-
-    .edit-btn,
-    .logout-btn {
-      background: #ff6f61;
-      color: #fff;
-    }
-
-    .status.pending {
-      background: #f39c12;
-    }
-
-    .status.accepted {
-      background: #27ae60;
+    .btn {
+      color: var(--bg-dark);
     }
 
     .theme-toggle {
-      background: #ffffff;
-      color: #2c3e50;
-
-      &:hover {
-        background: #f1f1f1;
-      }
+      background: var(--text-light);
+      color: var(--bg-dark);
     }
   }
 }
-
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.2);
+  flex-direction: row-reverse; // أهم نقطة للمحاذاة لليمين
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  padding: 10px 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
+  padding: 15px 25px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+background-color: #494e53;
   .navbar-brand h1 {
+    font-size: 28px;
+    color: var(--text-dark);
     margin: 0;
-    font-size: 24px;
-    color: #2c3e50;
+    
   }
 
-  .navbar-actions {
-    display: flex;
-    gap: 10px;
+  .theme-toggle {
+    padding: 8px 16px;
+    border-radius: 25px;
+    background: var(--bg-dark);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      background: #1a252f;
+    }
   }
 }
 
-
-.glass-effect {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
   padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  .profile-image img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 3px solid #007bff;
-    object-fit: cover;
-  }
-
-  .profile-info {
-    flex: 1;
-
-    h2 {
+  margin-bottom: 25px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: right;
+  
+  .card-header {
+    background: transparent;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    text-align: right;
+background: var(--glass-bg);
+    h5 {
       margin: 0;
-      font-size: 24px;
-      color: #2c3e50;
+      font-size: 22px;
+      color: var(--text-dark);
     }
+  }
 
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; // محاذاة عناصر البطاقة لليمين
+background: var(--glass-bg);
     p {
-      margin: 5px 0;
-      color: #7f8c8d;
-    }
-  }
-}
-
-
-.edit-btn,
-.logout-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  background: linear-gradient(45deg, #007bff, #00c4cc);
-  color: white;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.3s ease;
-
-  &:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg, #00c4cc, #007bff);
-  }
-}
-
-
-.theme-toggle {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 25px;
-  background: #34495e;
-  color: white;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-
-  &:hover {
-    background: #2c3e50;
-    transform: scale(1.05);
-  }
-}
-
-
-.profile-section {
-  h3 {
-    margin: 0 0 15px 0;
-    font-size: 20px;
-    color: #2c3e50;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin-bottom: 10px;
+      margin: 10px 0;
       font-size: 16px;
       color: #34495e;
+      text-align: right;
 
       strong {
-        color: #2c3e50;
-      }
-
-      .status {
-        padding: 5px 10px;
-        border-radius: 15px;
-        font-size: 14px;
-      }
-
-      .status.pending {
-        background: #ffeaa7;
-        color: #d35400;
-      }
-
-      .status.accepted {
-        background: #c3e6cb;
-        color: #2ecc71;
+        font-weight: bold;
+        color: var(--text-dark);
       }
     }
   }
 }
 
+.btn {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, var(--primary), var(--accent));
+  color: white;
+
+  &:hover {
+    background: linear-gradient(45deg, var(--accent), var(--primary));
+    transform: scale(1.05);
+  }
+}
+/*.add-car-btn {
+  background: linear-gradient(135deg, #28a745, #218838); // تدرج لوني أخضر
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+  transition: all 0.3s ease;
+  margin-top: 15px;
+
+  &:hover {
+    background: linear-gradient(135deg, #218838, #28a745);
+    transform: scale(1.05);
+  }
+}*/.client-card {
+  direction: rtl;
+  background-color: #f3f4f6;
+  padding: 25px;
+  margin: 30px 30px 30px auto; /* يجعل البوكس ملتصق من اليمين */
+  border-radius: 16px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: right;
+  color: #374151;
+  font-family: 'Cairo', sans-serif;
+  background: var(--glass-bg);
+}
+
+.client-name {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #111827;
+  font-weight: bold;
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 10px;
+}
+
+.info-item {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.add-car-btn {
+  margin-top: 20px;
+  background-color: #10b981; /* أخضر فاخر */
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.add-car-btn:hover {
+  background-color: #059669;
+  transform: scale(1.03);
+}
+
+
+.list-group-item {
+  background: transparent;
+  color: #2c3e50;
+  font-size: 15px;
+  text-align: right;
+}
 
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .profile-header {
-    flex-direction: column;
     text-align: center;
+    gap: 10px;
   }
 
-  .profile-actions {
-    flex-direction: column;
-    gap: 10px;
+  .card-body {
+    text-align: center;
+    align-items: center;
   }
 }

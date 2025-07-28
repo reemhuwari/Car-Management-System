@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { CarService } from '../../../services/car.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-cars',
@@ -18,7 +19,8 @@ export class AddCarsComponent {
     type: '',
     status: '',
     image: '',
-    fuelType: ''
+    fuelType: '',
+    clientId: null
   };
 
   submitted = false;
@@ -27,22 +29,71 @@ export class AddCarsComponent {
   isDropZoneActive = false;
   previewImage: string | ArrayBuffer | null = null;
 
-  constructor(private carService: CarService, private router: Router) {}
+  constructor(private carService: CarService, private router: Router) {
 
-  addCar(form: any) {console.log(this.newCar);
+  const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+if (user?.id) {
+  this.newCar.clientId = user.id;
+} else {
+  alert('يجب تسجيل الدخول أولاً');
+  this.router.navigate(['/login']);
+}
+
+  }
+ 
+  /*addCar(form: any) {
+    console.log(this.newCar);
     this.submitted = true;
     if (form.invalid || !this.newCar.image) return;
 
     this.carService.addCar(this.newCar).subscribe({
       next: () => {
         alert('تمت إضافة السيارة بنجاح 🚗✅');
-        this.router.navigate(['/cars-list']);
+        this.router.navigate(['/client-cars']);
       },
       error: (err) => {
         console.error('حدث خطأ أثناء الإضافة:', err);
       }
     });
   }
+addCar(form: NgForm) {
+  const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+  if (!user?.id) return;
+
+  const carToAdd = {
+    ...this.newCar,
+    clientId: user.id,
+    image: this.previewImage || 'assets/images/default.jpg'
+  };
+
+  this.carService.addCar(carToAdd).subscribe(() => {
+    form.resetForm();
+    this.previewImage = null;
+  });
+  this.carService.addCar(carToAdd).subscribe(() => {
+  alert('تمت إضافة السيارة بنجاح 🚗✅');
+  this.router.navigate(['/client-cars']);
+});
+
+}*/
+addCar(form: NgForm) {
+  const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+  if (!user?.id) return;
+
+  const carToAdd = {
+    ...this.newCar,
+    clientId: user.id,
+    /*image: this.previewImage || 'assets/images/default.jpg'*/
+  };
+
+  this.carService.addCar(carToAdd).subscribe(() => {
+    alert('تمت إضافة السيارة بنجاح 🚗✅');
+    form.resetForm();
+    this.previewImage = null;
+    this.router.navigate(['/client-cars',user.id]); // انتقل لصفحة سيارات الكلينت
+  });
+}
+
 
 
   onDragOver(event: DragEvent) {

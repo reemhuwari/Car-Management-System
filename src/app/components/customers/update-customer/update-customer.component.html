@@ -4,7 +4,7 @@
   <div class="form-details">
   <form *ngIf="customerForm" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
     <label>الاسم:</label>
-    <input formControlName="name" type="text" />
+    <input formControlName="fullName" type="text" />
      <br>
     <label>الهاتف:</label>
     <input formControlName="phone" type="text" />
@@ -12,12 +12,31 @@
     <label>البريد الإلكتروني:</label>
     <input formControlName="email" type="email" />
 <br>
+<div formGroupName="address">
+  <label>البلد:</label>
+<select formControlName="country" (change)="onCountryChange($event)">
+  <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+</select>
+
+
+  <br>
+
+  <label>المدينة:</label>
+  <select formControlName="city">
+    <option value="">اختر المدينة</option>
+    <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+  </select>
+  <br>
+</div>
+
+<!--
+<div formGroupName="address">
     <label>البلد:</label>
     <input formControlName="country" type="text" />
 <br>
 <label>المدينة:</label>
 <input formControlName="city" type="text" />
-<br>
+<br></div>-->
     <button type="submit" [disabled]="!customerForm.valid">تحديث</button>
   </form>
 </div></div>

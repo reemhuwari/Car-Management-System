@@ -54,17 +54,17 @@ export class CustomersService {
   })*/
    
  
-   updateCustomer(id: number, updatedCustomer: Customer): Observable<Customer> {
-    return this.http.put<Customer>(`${this.customerUrl}/${id}`, updatedCustomer);
+   updateCustomer(id: string, updatedCustomer: Customer): Observable<any> {
+    return this.http.put(`${this.customerUrl}/${id}`, updatedCustomer);
   }
 
 
-  deleteCustomer(id: number): Observable<void> {
+  deleteCustomer(id: string): Observable<void> {
     return this.http.delete<void>(`${this.customerUrl}/${id}`);
   }
     
-  getCustomer(id: number): Observable<any> {
-    return this.http.get(`${this.customerUrl}/${id}`);
+  getCustomer(id: string): Observable<Customer> {
+    return this.http.get<Customer>(`${this.customerUrl}/${id}`);
   }
 
     // استرجاع جميع العملاء

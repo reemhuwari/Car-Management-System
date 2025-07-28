@@ -5,8 +5,8 @@
   <p><strong>البريد الإلكتروني:</strong> {{ customerData.email }}</p>
   <p><strong>الهاتف:</strong> {{ customerData.phone }}</p>
   <p><strong>الجنس:</strong> {{ customerData.gender }}</p>
-  <p><strong>الدولة:</strong> {{ customerData.country }}</p>
-  <p><strong>المدينة:</strong> {{ customerData.city }}</p>
+  <p><strong>الدولة:</strong> {{ countryName }}</p>
+  <p><strong>المدينة:</strong> {{ cityName }}</p>
   <p><strong>الشارع:</strong> {{ customerData.street }}</p>
   <p><strong>تاريخ التسجيل:</strong> {{ customerData.registrationDate | date:'dd-MM-yyyy' }}</p>
   <button (click)="editProfile()">تعديل الملف الشخصي</button>

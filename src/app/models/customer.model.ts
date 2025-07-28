@@ -3,7 +3,7 @@ import { UserType } from "../enums/user.enum";
 
 
 interface Customer{
-   id?:string|any
+   id?:string|null,
     fullName:string,
     email:string,
     password:string,
@@ -12,9 +12,11 @@ interface Customer{
     registrationDate:Date|null,
     gender:string,
     terms:boolean|null,
-    country:string,
-    city:string,
-    street:string,
+    address: {
+    country: string;
+    city: string;
+    street: string;
+  };
     role:UserType
 }
 export default Customer;

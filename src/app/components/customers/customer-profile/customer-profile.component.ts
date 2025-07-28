@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CustomersService } from '../../../services/customers.service';
+import { LookupService } from '../../../services/lookup.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,9 +13,10 @@ import { CustomersService } from '../../../services/customers.service';
 })
 export class CustomerProfileComponent implements OnInit {
   customerData: any = null;
-
+countryName: string = '';
+  cityName: string = '';
   errorMessage: string = '';
-  constructor(private route: ActivatedRoute,private customerService:CustomersService,private router:Router) {}
+  constructor(private route: ActivatedRoute,private customerService:CustomersService,private router:Router,private lookupService: LookupService,) {}
 
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
@@ -23,31 +25,35 @@ export class CustomerProfileComponent implements OnInit {
       this.customerService.getCustomerData(user.email).subscribe(data => {
         if (data) {
           this.customerData = data;
+          if (this.customerData.address?.country ?? '') {
+            this.lookupService.getById(this.customerData.address?.country ?? '').subscribe(res => {
+            
+                 this.countryName = res.name;
+            });
+          }
+
+          // اجلب اسم المدينة بناءً على ID
+          if (this.customerData.address?.city ?? '') {
+            this.lookupService.getById(this.customerData.address?.city ?? '').subscribe(res => {
+            
+              this.cityName = res.name;
+            });
+          }
+
         } else {
           this.errorMessage = 'لم يتم العثور على بيانات العميل';
         }
       });
     } else {
       this.errorMessage = 'لم يتم العثور على بيانات المستخدم';
-      this.router.navigate(['/login']); // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول
+      this.router.navigate(['/login']);
     }
+  }
 
-
-
-    /* 
-    const userId=Number (this.route.snapshot.paramMap.get('id'));
-
-    this.customerService.getCustomer(userId).subscribe({
-      next: (data) => (this.customerData = data),
-      error: () => (this.errorMessage = 'تعذر تحميل بيانات المستخدم', this.router.navigate(['/login']))
-    });
-   
- */
-}
-
-
-  // دالة لتوجيه المستخدم إلى صفحة تعديل الملف الشخصي
   editProfile(): void {
-    this.router.navigate(['/update-customer']); // تأكد من أن المسار /edit-profile موجود
+    this.router.navigate(['/update-customer', this.customerData.id]);
   }
 }
+
+
+

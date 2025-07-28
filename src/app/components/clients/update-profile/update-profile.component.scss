@@ -1,4 +1,4 @@
-.update-profile-form {
+/*.update-profile-form {
   max-width: 500px;
   margin: auto;
   padding: 20px;
@@ -56,5 +56,83 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 15px;
+}*/
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: #e5e7eb; /* رمادي فاتح */
+  direction: rtl;
+  margin: 0;
+  padding: 0;
 }
+
+.update-profile-form {
+  max-width: 550px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+  text-align: right;
+  transition: all 0.3s ease;
+}
+
+.update-profile-form h2 {
+  text-align: center;
+  font-size: 26px;
+  color: #374151;
+  margin-bottom: 25px;
+}
+
+.update-profile-form label {
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  display: block;
+  color: #4b5563;
+}
+
+.update-profile-form input,
+.update-profile-form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background: #f9fafb;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.update-profile-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #10b981; /* أخضر أنيق */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.update-profile-form button:hover {
+  background-color: #059669;
+  transform: scale(1.02);
+}
+
+@media (max-width: 600px) {
+  .update-profile-form {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .update-profile-form h2 {
+    font-size: 22px;
+  }
+}
+
 

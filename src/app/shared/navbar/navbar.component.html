@@ -1,4 +1,4 @@
-<nav class="navbar">
+<!--<nav class="navbar">
    
     <ul class="nav-links">
       <li><a routerLink="/cars-list">قائمة السيارات</a></li>
@@ -6,4 +6,20 @@
     </ul>
      <div class="logo">Prestige AutoMobile</div>
   </nav>
- 
+-->
+  <nav class="navbar">
+  <div class="logo">Prestige AutoMobile</div>
+
+  <ul class="nav-links">
+    <li><a routerLink="/cars-list">قائمة السيارات</a></li>
+
+    <li class="dropdown">
+      <button class="dropbtn">👤 الملف الشخصي ▾</button>
+      <div class="dropdown-content">
+        <a [routerLink]="userType === 'customer' ? '/customer-profile' : '/client-profile'">الملف الشخصي</a>
+        <a (click)="logout()">تسجيل الخروج</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+

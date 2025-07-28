@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+
+<div class="client-cars-page">
+  <h1>🚗 سياراتي</h1>
+
+  <div class="controls">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="filterCars()"
+      placeholder="🔍 ابحث عن سيارة..."
+      class="search-box"
+    />
+  </div>
+
+  <div *ngIf="filteredCars.length > 0; else noCars" class="cars-grid">
+    <div *ngFor="let car of filteredCars" class="car-card">
+      <div class="image-container">
+        <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}" />
+      </div>
+      <div class="car-info">
+        <h3>{{ car.brand }} - {{ car.model }}</h3>
+        <p>🛢️ الوقود: <strong>{{ car.fuelType }}</strong></p>
+        <p>🆔 معرف السيارة: {{ car.id }}</p>
+      </div>
+      <button (click)="deleteCar(car.id)" class="delete-btn">
+  🗑️ حذف السيارة
+</button>
+
+    </div>
+  </div>
+
+  <ng-template #noCars>
+    <p class="no-results">🚫 لا توجد سيارات مطابقة لبحثك حالياً.</p>
+  </ng-template>
+</div>
+
+
+<app-footer></app-footer>
+

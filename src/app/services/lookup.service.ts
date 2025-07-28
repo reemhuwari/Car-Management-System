@@ -14,7 +14,7 @@ export class LookupService {
    apiUrl = 'http://localhost:3000/lookups'; 
 
   
-
+ 
   getAll(type?: LookupEnum, parentId?: string ): Observable<Lookup[]> {
     let url = this.apiUrl;
     if (type) {
@@ -27,6 +27,9 @@ export class LookupService {
   }
 
   
-  
+  getById(id: number): Observable<Lookup> {
+  return this.http.get<Lookup>(`${this.apiUrl}/${id}`);
+}
+
 
 }

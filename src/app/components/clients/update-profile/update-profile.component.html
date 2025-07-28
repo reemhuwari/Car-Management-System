@@ -1,39 +1,73 @@
-<app-navbar></app-navbar>
+<!--<app-navbar></app-navbar>
 <div class="update-profile-form">
   <h2>تعديل الملف الشخصي 👤</h2>
 
-  <form (ngSubmit)="updateProfile()">
-    <label>
-      <span>الاسم الكامل:</span>
-      <input type="text" [(ngModel)]="user.fullName" name="fullName" />
-      <div class="error" *ngIf="fieldErrors.fullName">املأ هذا الحقل</div>
-    </label>
+  
+  <form *ngIf="clientForm" [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+    <label>الاسم:</label>
+    <input formControlName="fullName" type="text" />
+     <br>
+    <label>الهاتف:</label>
+    <input formControlName="phone" type="text" />
+<br>
+    <label>البريد الإلكتروني:</label>
+    <input formControlName="email" type="email" />
+<br>
 
-    <label>
-      <span>رقم الهاتف:</span>
-      <input type="text" [(ngModel)]="user.phone" name="phone" />
-      <div class="error" *ngIf="fieldErrors.phone">املأ هذا الحقل</div>
-    </label>
-
-    <label>
-      <span>البلد:</span>
-      <input type="text" [(ngModel)]="user.address.country" name="country" />
-      <div class="error" *ngIf="fieldErrors.country">املأ هذا الحقل</div>
-    </label>
-
-    <label>
-      <span>المدينة:</span>
-      <input type="text" [(ngModel)]="user.address.city" name="city" />
-      <div class="error" *ngIf="fieldErrors.city">املأ هذا الحقل</div>
-    </label>
+    <div formGroupName="address">
+  <label>البلد:</label>
+<select formControlName="country" (change)="onCountryChange($event)">
+  <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+</select>
 
 
-    <label>
-      <span>الصورة الشخصية:</span>
-      <img [src]="user.photoUrl || 'assets/default-profile.png'" alt="صورة المستخدم" class="profile-img" />
-    </label>
+  <br>
+
+  <label>المدينة:</label>
+  <select formControlName="city">
+    <option value="">اختر المدينة</option>
+    <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+  </select>
+  <br>
+</div>
+
+
+    
 
     <button type="submit">💾 حفظ التعديلات</button>
   </form>
 </div>
+<app-footer></app-footer>
+--><app-navbar></app-navbar>
+
+<div class="update-profile-form glass-form">
+  <h2>🛠️ تعديل الملف الشخصي</h2>
+
+  <form *ngIf="clientForm" [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+    <label>👤 الاسم:</label>
+    <input formControlName="fullName" type="text" />
+
+    <label>📞 الهاتف:</label>
+    <input formControlName="phone" type="text" />
+
+    <label>✉️ البريد الإلكتروني:</label>
+    <input formControlName="email" type="email" />
+
+    <div formGroupName="address">
+      <label>🌍 البلد:</label>
+      <select formControlName="country" (change)="onCountryChange($event)">
+        <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+      </select>
+
+      <label>🏙️ المدينة:</label>
+      <select formControlName="city">
+        <option value="">اختر المدينة</option>
+        <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+      </select>
+    </div>
+
+    <button type="submit">💾 حفظ التعديلات</button>
+  </form>
+</div>
+
 <app-footer></app-footer>

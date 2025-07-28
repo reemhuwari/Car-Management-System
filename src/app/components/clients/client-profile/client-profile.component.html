@@ -1,60 +1,77 @@
 <app-navbar></app-navbar>
+
 <div class="profile-container" [ngClass]="{'dark-mode': isDarkMode}">
-  <nav class="navbar">
+  <div class="navbar">
     <div class="navbar-brand">
       <h1>ملفي الشخصي</h1>
     </div>
-    <div class="navbar-actions">
-      <button class="theme-toggle" (click)="toggleDarkMode()">
-        {{ isDarkMode ? '🌞' : '🌙' }}
-      </button>
-    </div>
-  </nav>
+    <button class="theme-toggle" (click)="toggleDarkMode()">
+      {{ isDarkMode ? '🌞 وضع نهاري' : '🌙 وضع ليلي' }}
+    </button>
+  </div>
 
-  <div class="profile-header glass-effect">
-    <div class="profile-image">
-      <img [src]="user?.photoUrl || 'assets/default-profile.png'" alt="صورة العميل" />
+  <!-- بيانات العميل -->
+  <div class="card">
+    <div class="card-header">
+      <h5>🧾 معلوماتي الشخصية</h5>
     </div>
-    <div class="profile-info">
-      <h2>{{ user?.fullName || 'اسم غير متوفر' }}</h2>
-      <p>{{ user?.email || 'إيميل غير متوفر' }}</p>
-      <button class="logout-btn" (click)="logout()">تسجيل الخروج</button>
+  <!--  <div class="card-body" *ngIf="clientData; else noData">
+      <p><strong>الاسم:</strong> {{ clientData.fullName }}</p>
+      <p><strong>البريد الإلكتروني:</strong> {{ clientData.email }}</p>
+      <p><strong>الهاتف:</strong> {{ clientData.phone }}</p>
+      <p><strong>الجنس:</strong> {{ clientData.gender }}</p>
+      <p><strong>الدولة:</strong> {{ countryName }}</p>
+      <p><strong>المدينة:</strong> {{ cityName }}</p>
+      <p><strong>الشارع:</strong> {{ clientData.street }}</p>
+      <p><strong>تاريخ التسجيل:</strong> {{ clientData.registrationDate | date:'dd-MM-yyyy' }}</p>
+      <button class="btn btn-primary mt-3"  class="btn add-car-btn"(click)="editProfileClient()">✏️ تعديل المعلومات</button>
+    </div>
+  </div>--><div class="client-card" *ngIf="clientData; else noData">
+  <h3 class="client-name">👤 {{ clientData.fullName }}</h3>
+
+  <div class="info-item"><strong>📧 البريد الإلكتروني:</strong> {{ clientData.email }}</div>
+  <div class="info-item"><strong>📞 الهاتف:</strong> {{ clientData.phone }}</div>
+  <div class="info-item"><strong>⚧️ الجنس:</strong> {{ clientData.gender }}</div>
+  <div class="info-item"><strong>🌍 الدولة:</strong> {{ countryName }}</div>
+  <div class="info-item"><strong>🏙️ المدينة:</strong> {{ cityName }}</div>
+  <div class="info-item"><strong>🚪 الشارع:</strong> {{ clientData.street }}</div>
+  <div class="info-item"><strong>📅 تاريخ التسجيل:</strong> {{ clientData.registrationDate | date:'dd-MM-yyyy' }}</div>
+
+  <button class="btn add-car-btn" (click)="editProfileClient()">✏️ تعديل المعلومات</button>
+</div>
+
+  <!-- السيارات -->
+  <div class="card">
+    <div class="card-header">
+      <h5>🚗 سياراتي</h5>
+    </div>
+    <div class="card-body d-flex gap-2 flex-wrap">
+      <a class="btn btn-outline-info" routerLink="/client-cars">📋 عرض سياراتي</a>
+      <a class="btn btn-success" routerLink="/add-cars">➕ إضافة سيارة</a>
     </div>
   </div>
 
-  <div class="profile-section glass-effect">
-    <h3>🧾 معلوماتي الشخصية</h3>
-    <button class="edit-btn" routerLink="/client-update">تعديل</button>
-    <ul>
-      <li><strong>الاسم:</strong> {{ user?.fullName }}</li>
-      <li><strong>الإيميل:</strong> {{ user?.email }}</li>
-      <li><strong>رقم الجوال:</strong> {{ user?.phone }}</li>
-      <li><strong>العنوان:</strong> {{user?.address?.country}} - {{user?.address?.city}}</li>
+  <!-- الطلبات -->
+  <div class="card">
+    <div class="card-header">
+      <h5>📄 طلباتي</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">🔹 طلب 1 - <span class="badge bg-warning text-dark">قيد المراجعة</span></li>
+      <li class="list-group-item">🔹 طلب 2 - <span class="badge bg-success">تم القبول</span></li>
     </ul>
   </div>
 
-  <div class="profile-section glass-effect">
-    <h3>🚗 سياراتي</h3>
-    <div class="profile-actions">
-      <button class="edit-btn" routerLink="/cars-list">📋 سياراتي</button>
-      <button class="edit-btn" routerLink="/add-cars">➕ إضافة سيارة</button>
+  <!-- الدفعات -->
+  <div class="card">
+    <div class="card-header">
+      <h5>💳 دفعاتي</h5>
     </div>
-  </div>
-
-  <div class="profile-section glass-effect">
-    <h3>🚘 طلباتي</h3>
-    <ul>
-      <li>🔹 تويوتا كامري 2020 - <span class="status pending">قيد المراجعة</span></li>
-      <li>🔹 نيسان ألتيما 2021 - <span class="status accepted">تم القبول</span></li>
-    </ul>
-  </div>
-
-  <div class="profile-section glass-effect">
-    <h3>💳 دفعاتي</h3>
-    <ul>
-      <li>🔹 رقم العملية: 123 - 1000 دينار - 01/01/2025</li>
-      <li>🔹 رقم العملية: 124 - 2500 دينار - 10/01/2025</li>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">🔹 عملية رقم 123 - 1000 دينار - 01/01/2025</li>
+      <li class="list-group-item">🔹 عملية رقم 124 - 2500 دينار - 10/01/2025</li>
     </ul>
   </div>
 </div>
+
 <app-footer></app-footer>

@@ -7,6 +7,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingClientsModule } from './app-routing-clients.module';
 import { SharedModule } from '../../shared/shared.module';
+import { ClientCarsComponent } from './client-cars/client-cars.component';
+
 
 
 
@@ -14,7 +16,8 @@ import { SharedModule } from '../../shared/shared.module';
   declarations: [
     ClientProfileComponent,
     UpdateProfileComponent,
-    MyRequestsComponent
+    MyRequestsComponent,
+    ClientCarsComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,8 @@ import { SharedModule } from '../../shared/shared.module';
   exports:[
     ClientProfileComponent,
     UpdateProfileComponent,
-    MyRequestsComponent
+    MyRequestsComponent,
+    ClientCarsComponent
   ]
 })
 export class ClientsModule { }

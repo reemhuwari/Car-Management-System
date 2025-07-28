@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidatorsService } from '../../validators.service';
-import {  FormControl, FormGroup, Validators } from '@angular/forms';
+import {  FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomersService } from '../../services/customers.service';
 import Customer from '../../models/customer.model';
 import { UserType } from '../../enums/user.enum';
@@ -26,13 +26,14 @@ export class SignupComponent implements OnInit{
    id!:Lookup;
   name!:Lookup 
   parentId!:Lookup
-  
-  constructor( public validatorsService: ValidatorsService,private httpClient:HttpClient,private customersService:CustomersService,private clientService:ClientsService,private lookupService:LookupService) {
+  formGroup!: FormGroup;
+
+  constructor( public validatorsService: ValidatorsService,private httpClient:HttpClient,private customersService:CustomersService,private clientService:ClientsService,private lookupService:LookupService, private fb: FormBuilder, ) {
     
   }
   
   ngOnInit():void {
-    
+     this.formGroup = this.initFormGroup();
     this.lookupService.getAll(LookupEnum.country).subscribe(
       (data:any)=>{
         this.countries=data;
@@ -55,10 +56,6 @@ export class SignupComponent implements OnInit{
       }
     )
   }
-  
-
-  
- 
 
   genders = [
     { key: 'male', label: 'ذكر' },
@@ -80,10 +77,10 @@ export class SignupComponent implements OnInit{
   }
   
 
-  formGroup: FormGroup = this.initFormGroup();
+  //formGroup: FormGroup = this.initFormGroup();
   errors: string[] = [];
-  initFormGroup():FormGroup{
-    return new FormGroup ({
+  initFormGroup(): FormGroup {
+  return this.fb.group({
       fullName: new FormControl('', Validators.required),
       email:new FormControl('',[Validators.required,Validators.email]),
       password: new FormControl('', [Validators.required ,Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$')]),
@@ -93,13 +90,11 @@ export class SignupComponent implements OnInit{
       registrationDate: new FormControl(''),
       gender: new FormControl(''),
       terms: new FormControl(''),
-      address: new FormGroup({
+      address: this.fb.group({
         country: new FormControl(''),
         city: new FormControl(),
         street: new FormControl(''),
        
-       
-     
       }),
       role:new FormControl(''),
     });
@@ -115,9 +110,12 @@ export class SignupComponent implements OnInit{
     registrationDate:null,
     gender:'',
     terms:null,
-    country:'',
+    address:{
+      country:'',
     city:'',
     street:'',
+    },
+    
     role:UserType.customer
   }
   client:Client={
@@ -129,9 +127,11 @@ export class SignupComponent implements OnInit{
     registrationDate:null,
     gender:'',
     terms:null,
-    country:'',
+    address:{
+      country:'',
     city:'',
     street:'',
+    },
     role:UserType.client
   }
   onSubmit():void {
@@ -148,8 +148,27 @@ export class SignupComponent implements OnInit{
          
       }} )
   }else { //this form group valid
-      this.customer=this.formGroup.value;
-      this.client=this.formGroup.value;
+      const formValues = this.formGroup.value;
+
+// استخراج بيانات العنوان
+const address = formValues.address || {};
+
+this.customer = {
+  ...formValues,
+  country: address.country || '',
+  city: address.city || '',
+  street: address.street || '',
+  role: formValues.role || UserType.customer,
+};
+
+this.client = {
+  ...formValues,
+  country: address.country || '',
+  city: address.city || '',
+  street: address.street || '',
+  role: formValues.role || UserType.client,
+};
+
       console.log(this.customer);
         if(this.customer.role === UserType.customer){
        this.customersService.addCustomers(this.customer).subscribe({

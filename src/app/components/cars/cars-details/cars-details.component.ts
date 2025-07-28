@@ -28,7 +28,7 @@ export class CarsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = String(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.carService.getCarById(id).subscribe(data => {
         this.car = data;
@@ -48,7 +48,7 @@ export class CarsDetailsComponent implements OnInit {
       // تحديث الحالة إلى Not available
       const updatedCar = { ...this.car, status: 'Not available' };
 
-      this.carService.updateCar(this.car.id, updatedCar).subscribe(() => {
+      this.carService.updateCar(updatedCar).subscribe(() => {
         alert('✅ تم الحجز بنجاح!');
         this.car.status = 'Not available';  // تحديث الحالة في الواجهة مباشرة
         this.showBookingForm = false;

@@ -1,8 +1,8 @@
 import { LookupEnum } from "../enums/lookup.enum";
 
 export interface Lookup {
-    id?: string; 
+    id?: number; 
     name: string;
     type: LookupEnum;
-    parentId?: string;
+    parentId?: number;
 }

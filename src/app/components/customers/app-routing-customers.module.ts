@@ -14,14 +14,11 @@ const routes:Routes=[
       component:CustomerProfileComponent
     },
     {
-        path:'update-customer',
+        path:'update-customer/:id',
       component:UpdateCustomerComponent
     },
-   /* {
-      path: 'customer-profile/:id',
-       component: CustomerProfileComponent 
-    }
-   */
+   
+   
     
   ]
   

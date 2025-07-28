@@ -1,5 +1,5 @@
 export interface Car {
-  id: number;
+  id: string;
   brand: string;
   model: string;
   year: number;
@@ -8,5 +8,6 @@ export interface Car {
   type: string;
    status: string;
   image: string;
+  clientId:string;
   }
   
