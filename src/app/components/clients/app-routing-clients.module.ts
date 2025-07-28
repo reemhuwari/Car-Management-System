@@ -26,8 +26,8 @@ const routes:Routes=[
 
   
 
-  { path: '', redirectTo: 'client-cars', pathMatch: 'full' },
-  { path: '**', redirectTo: 'client-cars' }
+  //{ path: '', redirectTo: 'client-cars', pathMatch: 'full' },
+  //{ path: '**', redirectTo: 'client-cars' }
     
   ]
   

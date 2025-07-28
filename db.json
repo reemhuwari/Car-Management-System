@@ -154,6 +154,26 @@
       "country": "8",
       "city": "15",
       "street": "شارع السلام "
+    },
+    {
+      "id": "6574",
+      "fullName": "laila",
+      "email": "laila@gmail.com",
+      "password": "Laila123",
+      "confirm_password": "Laila123",
+      "phone": 8789098989,
+      "registrationDate": "2025-07-10",
+      "gender": "female",
+      "terms": true,
+      "address": {
+        "country": "5",
+        "city": "9",
+        "street": ""
+      },
+      "role": "customer",
+      "country": "5",
+      "city": "9",
+      "street": ""
     }
   ],
   "clients": [
@@ -173,25 +193,6 @@
         "street": ""
       },
       "role": "client"
-    },
-    {
-      "id": "d607",
-      "fullName": "BMW company",
-      "email": "bmw@gmail.com",
-      "password": "Bmw12345",
-      "confirm_password": "Bmw12345",
-      "phone": 776567235,
-      "registrationDate": "2025-07-30",
-      "gender": "male",
-      "terms": true,
-      "address": {
-        "country": "6",
-        "city": ""
-      },
-      "role": "client",
-      "country": "6",
-      "city": "12",
-      "street": "الاحرار"
     },
     {
       "id": "1be5",
@@ -214,26 +215,6 @@
       "street": "شارع اردبيل"
     },
     {
-      "id": "d6f2",
-      "fullName": "prestege company",
-      "email": "prestege@gmail.com",
-      "password": "Prestege123",
-      "confirm_password": "Prestege123",
-      "phone": 786566643,
-      "registrationDate": "2025-07-29",
-      "gender": "male",
-      "terms": true,
-      "address": {
-        "country": "5",
-        "city": "10",
-        "street": ""
-      },
-      "role": "client",
-      "country": "5",
-      "city": "10",
-      "street": ""
-    },
-    {
       "id": "7535",
       "fullName": "ata othman",
       "email": "ata@gmail.com",
@@ -251,6 +232,26 @@
       "role": "client",
       "country": "7",
       "city": "14",
+      "street": ""
+    },
+    {
+      "id": "aee5",
+      "fullName": "noor",
+      "email": "noor@gmail.com",
+      "password": "Noor1234",
+      "confirm_password": "Noor1234",
+      "phone": 987678909,
+      "registrationDate": "2025-07-03",
+      "gender": "female",
+      "terms": true,
+      "address": {
+        "country": "5",
+        "city": "9",
+        "street": ""
+      },
+      "role": "client",
+      "country": "5",
+      "city": "9",
       "street": ""
     }
   ],
@@ -431,6 +432,41 @@
       "email": "ata@gmail.com",
       "password": "Ata12345",
       "type": "client"
+    },
+    {
+      "id": "1be5",
+      "fullName": "rafat huwari",
+      "email": "rafat@gmail.com",
+      "password": "rafat@gmail.com",
+      "type": "client"
+    },
+    {
+      "id": "7535",
+      "fullName": "ata othman",
+      "email": "ata@gmail.com",
+      "password": "ata@gmail.com",
+      "type": "client"
+    },
+    {
+      "id": "2d76",
+      "fullName": "odai ahmad",
+      "email": "odai@gmail.com",
+      "password": "odai@gmail.com",
+      "type": "client"
+    },
+    {
+      "id": "bbef",
+      "fullName": "noor",
+      "email": "noor@gmail.com",
+      "password": "Noor1234",
+      "type": "client"
+    },
+    {
+      "id": "47e1",
+      "fullName": "laila",
+      "email": "laila@gmail.com",
+      "password": "Laila123",
+      "type": "customer"
     }
   ],
   "lookups": [
@@ -954,7 +990,7 @@
       "status": "available",
       "image": "data:image/jpeg;base64,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",
       "fuelType": "Hybrid",
-      "clientId": "d607"
+      "clientId": null
     },
     {
       "id": "fd87",

@@ -9,14 +9,38 @@ import { Router } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
- userType: UserType | null = null;
+ userType: UserType|null=null;
 
 
   constructor(private router: Router) {}
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-    this.userType = user?.type; // يجب أن يكون عندك في بيانات المستخدم حقل type مثل 'client' أو 'customer'
+  const userData = localStorage.getItem('loggedInUser');
+  console.log('User:', userData);               // ✅ راقب بيانات المستخدم
+    
+  if (!userData) {
+    this.redirectToLogin();
+    return;
   }
+
+  try {
+    const user = JSON.parse(userData);
+    this.userType = user?.type;
+
+    if (this.userType !== 'customer' && this.userType !== 'client') {
+      this.redirectToLogin();
+    }
+  } catch (error) {
+    console.error('خطأ في قراءة بيانات المستخدم:', error);
+    this.redirectToLogin();
+  }
+}
+
+private redirectToLogin(): void {
+  this.router.navigate(['/login']);
+}
+
+
+  
   logout() {
     localStorage.removeItem('loggedInUser');
     this.router.navigate(['/login']); // غيّر '/login' حسب مسارك

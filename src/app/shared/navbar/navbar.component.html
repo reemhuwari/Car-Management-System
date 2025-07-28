@@ -16,7 +16,8 @@
     <li class="dropdown">
       <button class="dropbtn">👤 الملف الشخصي ▾</button>
       <div class="dropdown-content">
-        <a [routerLink]="userType === 'customer' ? '/customer-profile' : '/client-profile'">الملف الشخصي</a>
+        <a [routerLink]=" userType === 'customer' ? '/customer-profile' : '/client-profile'">الملف الشخصي</a>
+
         <a (click)="logout()">تسجيل الخروج</a>
       </div>
     </li>

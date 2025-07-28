@@ -1,4 +1,4 @@
-.customer-profile{
+/*.customer-profile{
 display: flex;
   flex-direction: column;
   min-height: 65vh;
@@ -69,4 +69,53 @@ direction: rtl;
         }
       }
     }
-    
+    */
+    .customer-profile {
+  direction: rtl;
+  background: #f9fafb;
+  padding: 40px 20px;
+  min-height: 100vh;
+  font-family: 'Cairo', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-details {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  color: #1f2937;
+  text-align: right;
+  line-height: 2;
+}
+
+.profile-details h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #047857;
+}
+
+.profile-details p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.profile-details button {
+  margin-top: 30px;
+  background-color: #10b981; /* أخضر عصري */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-details button:hover {
+  background-color: #059669;
+}
