@@ -1,32 +1,65 @@
-<button (click)="goBack()">🔙 رجوع</button>
+<app-navbar></app-navbar>
 
-<div *ngIf="car;else loading">
-    <h2>تفاصيل السيارة</h2>
-    <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}" width="400" height="250" />
+<div class="page-wrapper">
+  <div class="car-details-container">
+    <h2 class="section-title">🚘 تفاصيل السيارة</h2>
+<hr>
+    <div *ngIf="car" class="car-card">
+      <img [src]="car.image" [alt]="car.brand + ' ' + car.model" class="car-image" />
 
-    <ul class="car-info">
-      <li><strong>الماركة:</strong> {{ car.brand }}</li>
-      <li><strong>الموديل:</strong> {{ car.model }}</li>
-      <li><strong>السنة:</strong> {{ car.year }}</li>
-      <li><strong>السعر:</strong> {{ car.price }} ريال</li>
-      <li><strong>نوع الوقود:</strong> {{ car.fuelType }}</li>
-      <li><strong>النوع:</strong> {{ car.type }}</li>
-      <li><strong>الحالة:</strong> {{ car.status }}</li>
-    </ul>
-
-    <button (click)="toggleBookingForm()">حجز</button>
-
-    <div *ngIf="showBookingForm" class="booking-form">
-      <h3>نموذج الحجز</h3>
-      <input type="date" [(ngModel)]="bookingDate" placeholder="تاريخ الحجز" />
-      <input type="date" [(ngModel)]="returnDate" placeholder="تاريخ التسليم" />
-      <input type="text" [(ngModel)]="city" placeholder="المدينة" />
-      <input type="text" [(ngModel)]="street" placeholder="الشارع" />
-      <input type="text" [(ngModel)]="cardNumber" placeholder="رقم البطاقة" />
-      <button (click)="confirmBooking()">تأكيد الحجز</button>
+      <ul class="car-info">
+        <li><strong>الماركة:</strong> {{ car.brand }}</li>
+        <li><strong>الموديل:</strong> {{ car.model }}</li>
+        <li><strong>السنة:</strong> {{ car.year }}</li>
+        <li><strong>السعر:</strong> {{ car.price }} ريال</li>
+        <li><strong>نوع الوقود:</strong> {{ car.fuelType }}</li>
+        <li><strong>النوع:</strong> {{ car.type }}</li>
+        <li><strong>الحالة:</strong> {{ car.status }}</li>
+      </ul>
     </div>
-  </div>
 
-<ng-template #loading>
-    <p>جاري تحميل تفاصيل السيارة...</p>
-  </ng-template>
+    <h3 class="section-title">👤 معلومات مالك السيارة</h3>
+    <div *ngIf="client">
+      <ul class="client-info">
+        <li><strong>الاسم:</strong> {{ client.fullName }}</li>
+        <li><strong>الإيميل:</strong> {{ client.email }}</li>
+        <li><strong>الهاتف:</strong> {{ client.phone }}</li>
+      </ul>
+    </div>
+
+    <button class="btn btn-primary" (click)="toggleBookingForm()">احجز سيارة الان</button>
+<br><br>
+    <div *ngIf="showBookingForm" class="booking-form">
+      <h3>📝 نموذج الحجز</h3>
+<hr>
+      <div class="form-group">
+        <label for="bookingDate">تاريخ الحجز:</label>
+        <input id="bookingDate" type="date" [(ngModel)]="bookingDate" />
+      </div>
+
+      <div class="form-group">
+        <label for="returnDate">تاريخ التسليم:</label>
+        <input id="returnDate" type="date" [(ngModel)]="returnDate" />
+      </div>
+
+      <div class="form-group">
+        <label for="city">المدينة:</label>
+        <input id="city" type="text" [(ngModel)]="city" placeholder="مثال: عمّان" />
+      </div>
+
+      <div class="form-group">
+        <label for="street">الشارع:</label>
+        <input id="street" type="text" [(ngModel)]="street" placeholder="مثال: شارع الجامعة" />
+      </div>
+
+      <div class="form-group">
+        <label for="cardNumber">رقم البطاقة البنكية:</label>
+        <input id="cardNumber" type="text" [(ngModel)]="cardNumber" placeholder="**** **** **** ****" />
+      </div>
+
+      <button class="btn btn-success" (click)="confirmBooking()">تأكيد الحجز ✅</button>
+    </div>
+
+    <button class="btn btn-secondary back-button" (click)="goBack()">🔙 رجوع</button>
+  </div>
+</div>

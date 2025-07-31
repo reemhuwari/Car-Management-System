@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Location } from '@angular/common';
 import { CarService } from '../../../services/car.service';
+import { ClientsService } from '../../../services/clients.service';
+import { UserType } from '../../../enums/user.enum';
 
 @Component({
   selector: 'app-cars-details',
@@ -19,22 +21,39 @@ export class CarsDetailsComponent implements OnInit {
   city = '';
   street = '';
   cardNumber = '';
-
+  userType:any='';
+  client: any=null ;
   constructor(
     private route: ActivatedRoute,
     private carService: CarService,
-    private location: Location
-
+    private location: Location,
+    private clientService:ClientsService
   ) {}
 
-  ngOnInit() {
-    const id = String(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.carService.getCarById(id).subscribe(data => {
-        this.car = data;
-      });
-    }
+  
+
+ngOnInit() {
+  this.userType = localStorage.getItem('userType') || '';
+  console.log('👤 User type:', this.userType);
+
+  const id = String(this.route.snapshot.paramMap.get('id'));
+  if (id) {
+    this.carService.getCarById(id).subscribe(data => {
+      this.car = data;
+      console.log('🚗 Car:', this.car);
+
+      if (this.car.clientId) {
+       
+    
+        this.clientService.getClient(this.car.clientId).subscribe(
+          clientData => {
+            this.client = clientData;
+            }
+        );
+      }
+    });
   }
+}
 
   toggleBookingForm() {
     if (this.car.status.toLowerCase() === 'available') {

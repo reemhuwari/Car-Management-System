@@ -14,7 +14,7 @@ const routes:Routes=[
       component:AddCarsComponent
     },
     {
-        path:'cars-details',
+        path:'cars-details/:id',
       component:CarsDetailsComponent
     },
     {

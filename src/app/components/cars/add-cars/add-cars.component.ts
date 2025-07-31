@@ -41,56 +41,46 @@ if (user?.id) {
 
   }
  
-  /*addCar(form: any) {
-    console.log(this.newCar);
-    this.submitted = true;
-    if (form.invalid || !this.newCar.image) return;
-
-    this.carService.addCar(this.newCar).subscribe({
-      next: () => {
-        alert('تمت إضافة السيارة بنجاح 🚗✅');
-        this.router.navigate(['/client-cars']);
-      },
-      error: (err) => {
-        console.error('حدث خطأ أثناء الإضافة:', err);
-      }
-    });
+ 
+addCar(form: NgForm) {
+  const userJson = localStorage.getItem('loggedInUser');
+  
+  if (!userJson) {
+    alert("⚠️ لم يتم تسجيل الدخول، لا يمكن إضافة السيارة.");
+    return;
   }
-addCar(form: NgForm) {
-  const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-  if (!user?.id) return;
+
+  const user = JSON.parse(userJson);
+
+  if (!user?.id) {
+    alert("⚠️ لا يوجد رقم تعريف للمستخدم.");
+    return;
+  }
+
+  /*تحقق أن نوع المستخدم هو عميل فقط
+  const userType = localStorage.getItem('userType');
+  if (userType !== 'customer') {
+    alert("❌ فقط العملاء يمكنهم إضافة سيارة.");
+    return;
+  }*/
 
   const carToAdd = {
     ...this.newCar,
     clientId: user.id,
-    image: this.previewImage || 'assets/images/default.jpg'
+    // image: this.previewImage || 'assets/images/default.jpg'
   };
 
-  this.carService.addCar(carToAdd).subscribe(() => {
-    form.resetForm();
-    this.previewImage = null;
-  });
-  this.carService.addCar(carToAdd).subscribe(() => {
-  alert('تمت إضافة السيارة بنجاح 🚗✅');
-  this.router.navigate(['/client-cars']);
-});
-
-}*/
-addCar(form: NgForm) {
-  const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-  if (!user?.id) return;
-
-  const carToAdd = {
-    ...this.newCar,
-    clientId: user.id,
-    /*image: this.previewImage || 'assets/images/default.jpg'*/
-  };
-
-  this.carService.addCar(carToAdd).subscribe(() => {
-    alert('تمت إضافة السيارة بنجاح 🚗✅');
-    form.resetForm();
-    this.previewImage = null;
-    this.router.navigate(['/client-cars',user.id]); // انتقل لصفحة سيارات الكلينت
+  this.carService.addCar(carToAdd).subscribe({
+    next: () => {
+      alert('🚗 تمت إضافة السيارة بنجاح ✅');
+      form.resetForm();
+      this.previewImage = null;
+      this.router.navigate(['/client-cars', user.id]); // انتقل لصفحة سيارات الكلينت
+    },
+    error: (err) => {
+      console.error('❌ خطأ أثناء إضافة السيارة:', err);
+      alert('حدث خطأ أثناء إضافة السيارة، يرجى المحاولة لاحقًا.');
+    }
   });
 }
 

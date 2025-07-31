@@ -21,8 +21,10 @@ export class ClientsService {
   
   }
   getClient(id: string): Observable<Client> {
-    return this.http.get<Client>(`${this.clientUrl}/${id}`);
-  }
+  return this.http.get<Client>(`${this.clientUrl}/${id}`);
+}
+
+
   addClient(newClient:Client):Observable<Object>{ 
       const user: User = {
       fullName: newClient.fullName,
